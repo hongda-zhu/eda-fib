@@ -1,0 +1,11 @@
+Anna has won -150
+Omer has won 60
+Amalia is not in the casino
+Berta is not in the casino
+Cristina is already in the casino
+Cristina has won 7
+Cristina is not in the casino
+----------
+Jordi is winning 30
+Miquel is winning 0
+Omer is winning -20
