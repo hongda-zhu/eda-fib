@@ -1,41 +1,37 @@
 #include <iostream>
 #include <map>
-
 using namespace std;
 
+#define LIMIT 100000000
+
+int Collatz (int x, int y, int n) {
+    if(n%2 == 0) {
+        n = n/2 + x;
+    } else {
+        n = 3*n + y;
+    }
+    return n;
+}
+
 int main () {
-    string player, command;
-    map<string, int>Casino;
-    
-    while (cin >> player >> command) {
-        auto it = Casino.find(player);
-        if (command == "enters") {
-            if(it == Casino.end()) {
-                Casino.insert({player, 0});
+    int x, y, n;
+    while(cin >> x >> y >> n) {
+        int pos = 1;
+        map<int, int> M; // <pos, val>
+        bool repeated = false;
+        M[n] = 0;
+        while(not repeated and n <= LIMIT) {
+            n = Collatz(x, y, n);
+            auto it = M.find(n);
+            if (it == M.end()) {
+                M[n] = pos;
+                ++pos;
             } else {
-                cout << player << " is already in the casino" << endl;
-            }
-        } else if (command == "wins") {
-            int gain;
-            cin >> gain;
-            if(it != Casino.end()) {
-                (it->second) += gain;
-            } else {
-                cout << player << " is not in the casino" << endl;
-            }
-        } else if (command == "leaves") {
-            if (it != Casino.end()) {
-                cout << it->first << " has won " << it->second << endl;
-                Casino.erase(it->first);
-            } else {
-                cout << player << " is not in the casino" << endl;
+                n = pos - M[n];
+                repeated = true;            
             }
         }
+        M.clear();
+        cout << n << endl;
     };
-
-    cout << "----------" << endl;
-    for (const auto &it: Casino) {
-        string name = it.first;
-        cout << it.first << " is winning " << it.second << endl;
-    }
-}
+} 
