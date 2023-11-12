@@ -1,0 +1,28 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "**/templates/**/*.html": "django-html",
+        "set": "cpp",
+        "map": "cpp",
+        "iomanip": "cpp",
+        "ios": "cpp",
+        "string": "cpp",
+        "iosfwd": "cpp",
+        "__tree": "cpp",
+        "typeinfo": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "initializer_list": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "functional": "cpp",
+        "iostream": "cpp",
+        "algorithm": "cpp",
+        "unordered_set": "cpp",
+        "ostream": "cpp"
+    }
+}
