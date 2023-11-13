@@ -1,34 +1,52 @@
 #include <iostream>
-#include <iomanip>
-#include <set>
+#include <queue>
 #include <string>
 using namespace std;
 
-void stats(const multiset<int>& M) {
-    if (not M.empty()) {
-    auto it_min = M.begin();
-    auto it_max = M.rbegin();
-    double sum = 0;
-    for (const auto& elem: M) {
-        sum += elem;
-    }   
-        cout << "minimum: " << (*it_min) << ", maximum: " << (*it_max) << ", average: " << sum/M.size() << endl;
-    } else cout << "no elements" << endl;
+void print_stats(int min, int max, double total, int counter) {
+    cout.setf(ios::fixed);
+    cout.precision(4);
+    cout << "minimum: " << (min) << ", maximum: " << (max) << ", average: " << total/counter << endl;
 }
 
 int main () {
-    multiset<int> M;
+    // create a min-heap from the smallest elements to the largest elements. 
+    priority_queue<int, vector<int>, greater<int>> PQ;
     string op;
-    cout << fixed << setprecision(4);
+    bool first = true;
+    int max = 0, min = 0, counter = 0;
+    double total = 0;
     while (cin >> op) {
         if (op == "number") {
-            int n;
-            cin >> n;
-            M.insert(n);
-        } else if ("delete") {
-            if(not M.empty())
-            M.erase(M.begin());
+            int val; 
+            cin >> val;
+            PQ.push(val);
+            if (first) {
+                max = val;
+                min = val;
+                total = val;
+                first = false;
+                ++counter;
+            } else 
+            {
+                if (val > max) max = val; 
+                min = PQ.top();
+                total += val;
+                ++counter;
+            }
+            print_stats(min, max ,total, counter);
+        } else if (op == "delete") {
+            if (!PQ.empty()) { 
+                total -= PQ.top();
+                PQ.pop();
+                --counter;
+                min = PQ.top();
+                if (PQ.empty()) first = true;
+            } 
+            
+            if(PQ.empty()) cout << "no elements" << endl; 
+            else print_stats(min, max,total, counter); 
         }
-        stats(M);
-    }
-} 
+    } 
+    return 0;
+}

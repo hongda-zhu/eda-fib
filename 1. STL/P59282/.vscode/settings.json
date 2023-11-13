@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "**/templates/**/*.html": "django-html",
+        "queue": "cpp",
+        "ostream": "cpp",
+        "vector": "cpp",
+        "iostream": "cpp",
+        "ios": "cpp"
+    }
+}
