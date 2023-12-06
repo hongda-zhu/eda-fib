@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <list>
+using namespace std;
+
+typedef list<int> lt;
+typedef vector<lt> Graph;
+
+int nCC(const Graph &g, vector<bool> &visited) {
+    int n = g.size();
+    int nc = 0;
+    stack<int> s;
+
+    for (int i = 0; i < n; ++i) {
+        if (not visited[i]) {
+            s.push(i);
+
+            while (not s.empty()) {
+                int node = s.top();
+                s.pop();
+                if (not visited[node]) {
+                    visited[node] = true;
+                    for (auto it = g[node].begin(); it != g[node].end(); ++it) {
+                        if (not visited[*it]) s.push(*it);
+                    }
+                }
+            }
+            ++nc; // Increment the connected component count
+        }
+    }
+    return nc;
+}
+int main () {
+
+    int n, m;
+    while (cin >> n >> m) {
+        Graph g (n);
+        vector<bool> visited (n, false);
+
+        for (int i = 0; i < m; ++i) {
+            int node1, node2;
+            cin >> node1 >> node2;
+            g[node1].push_back(node2);
+            g[node2].push_back(node1);
+        }
+
+        int nc = nCC(g, visited);
+        if (not (n - nc == m)) cout << "no" << endl;
+        else cout << nc << endl;
+    }
+}

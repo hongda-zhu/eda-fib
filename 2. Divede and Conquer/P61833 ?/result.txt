@@ -1,0 +1,44 @@
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
+
+void mat_mult (vector <int> &res,vector <int> &m1, vector <int> &m2, int m) {
+    res[0] = (m1[0] * m2[0] + m1[1] * m2[2])%m;
+    res[1] = (m1[0] * m2[1] + m1[1] * m2[3])%m;
+    res[2] = (m1[2] * m2[0] + m1[3] * m2[2])%m;
+    res[3] = (m1[2] * m2[1] + m1[3] * m2[3])%m;
+}
+
+
+vector <int> mat_exp (vector <int> &m, int n, int mod) {
+    vector <int> res (4);
+    if (n == 1) res = m;
+    else if (n == 0) {
+        res = {1,0,0,1};
+    } else {
+        vector <int> temp_res = mat_exp (m, n/2, mod);
+        if (n%2 == 0) mat_mult(res, temp_res, temp_res, mod);
+        else if (n%2 == 1) {
+            vector <int> inter (4);
+            mat_mult(inter, temp_res, temp_res, mod);
+            mat_mult(res, inter, m, mod); 
+        }
+    }
+    return res;   
+}
+
+
+int main () {
+    vector <int> mat(4);
+    while (cin >> mat[0] >> mat[1] >> mat[2]>> mat[3]) {
+        int n, m;
+        cin >> n >> m;
+        vector <int> res = mat_exp(mat, n, m);
+        cout << res[0]%m << " " << res[1]%m << endl << res[2]%m << " " << res[3]%m << endl;
+        cout << "----------" << endl;
+    }
+}
+

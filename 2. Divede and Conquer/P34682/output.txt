@@ -1,0 +1,13 @@
+Sequence #1
+fixed point for 0: 4
+
+Sequence #2
+no fixed point for 0
+no fixed point for -1
+fixed point for 1: 1
+
+Sequence #3
+fixed point for 0: 3
+fixed point for -1: 5
+fixed point for 1: 2
+

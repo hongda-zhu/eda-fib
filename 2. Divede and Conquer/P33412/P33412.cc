@@ -3,21 +3,18 @@
 
 using namespace std;
 
-int i_first_ocurrence(double x, const vector<double>& V, int l, int r) {
-    // caso 1: caso base que peta la recurrencia cuando l > r
-    if (l > r) return -1;
-
-    int mid = (l + r)  / 2;
-    if (V[mid] == x) {
-        int prev = i_first_ocurrence(x, V, l, mid - 1);
-        if (prev != -1) return prev;
-        else return mid;
-    } else if (V[mid] >  x) return i_first_ocurrence(x, V, l, mid - 1);
-    else return i_first_ocurrence(x, V, mid + 1, r);
+bool i_resistant_search(double x, const vector <double> &v, int l, int r) {
+	if (l > r) return false;
+	int mid = (l + r)/2;
+	if (v[mid] == x) return true;
+	else if (mid > 0 and v[mid-1] == x) return true;
+	else if (mid < v.size() -1 and v[mid+1] == x) return true;
+    else if (v[mid] < x) return i_resistant_search(x, v, mid + 1, r);
+    else if (v[mid] > x) return i_resistant_search(x, v, l , mid - 1);
 }
 
-int first_occurrence(double x, const vector<double>& v) {
-    return i_first_ocurrence (x, v, 0, v.size() - 1);
+bool resistant_search(double x, const vector<double>& v) {
+	return i_resistant_search(x,v,0,v.size()-1);
 }
 
 int main () {
@@ -29,8 +26,8 @@ int main () {
     int n;
     cin >> n;
     vector<double> V(n);
-    for (int i = 0; i < V.size(); ++i) cin >> V[i];
+    for (int l = 0; l < V.size(); ++l) cin >> V[l];
 
     // call
-    cout << first_occurrence(x, V) << endl;
+    cout << resistant_search(x,V) << endl;
 } 
